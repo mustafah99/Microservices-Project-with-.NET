@@ -8,7 +8,8 @@ namespace AnimimoMicroservices.StockService.Data
     {
         public DbSet<StockLevel> StockLevel { get; set; }
 
-        public StockServiceContext()
+        public StockServiceContext(DbContextOptions<StockServiceContext> options
+            :base(options)
         {
 
         }
