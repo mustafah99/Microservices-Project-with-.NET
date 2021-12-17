@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "O9QLteXhQ5z9XEOFOc3TQHt4GB3nh7JSZT4fANNcBFo=",
+  "Source": "AnimimoMicroservices.BasketService",
+  "BasePath": "_content/AnimimoMicroservices.BasketService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
