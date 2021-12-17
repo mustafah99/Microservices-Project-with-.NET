@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "DWLjbxJLcafv6w2VroID2zK7OUc/LaWpqbdMuqUwjQM=",
+  "Source": "AnimimoMicroservices.CatalogService",
+  "BasePath": "_content/AnimimoMicroservices.CatalogService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

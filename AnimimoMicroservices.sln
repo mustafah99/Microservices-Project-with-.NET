@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimimoMicroservices.CatalogService", "AnimimoMicroservices.CatalogService\AnimimoMicroservices.CatalogService.csproj", "{45AA3389-36A5-40C9-8DAA-60521B5C6491}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimimoMicroservices.StockService", "AnimimoMicroservices.StockService\AnimimoMicroservices.StockService.csproj", "{E2B787AE-87D7-40D4-B122-23DD81504EAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45AA3389-36A5-40C9-8DAA-60521B5C6491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45AA3389-36A5-40C9-8DAA-60521B5C6491}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45AA3389-36A5-40C9-8DAA-60521B5C6491}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45AA3389-36A5-40C9-8DAA-60521B5C6491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2B787AE-87D7-40D4-B122-23DD81504EAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2B787AE-87D7-40D4-B122-23DD81504EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2B787AE-87D7-40D4-B122-23DD81504EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2B787AE-87D7-40D4-B122-23DD81504EAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD6A38B6-276A-4CD2-89F1-30F440532D78}
+	EndGlobalSection
+EndGlobal

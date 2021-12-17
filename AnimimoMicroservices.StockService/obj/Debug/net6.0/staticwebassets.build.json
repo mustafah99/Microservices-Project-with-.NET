@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "iWytMZGiYv1lr47rdq4dXWqjRQsqUc5RBfC0C+CXEtA=",
+  "Source": "AnimimoMicroservices.StockService",
+  "BasePath": "_content/AnimimoMicroservices.StockService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
