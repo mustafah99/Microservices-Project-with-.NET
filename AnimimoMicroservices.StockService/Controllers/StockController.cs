@@ -18,16 +18,27 @@ namespace AnimimoMicroservices.StockService.Controllers
         [HttpPut("{articleNumber}")]
         public IActionResult UpdateStockLevel(string articleNumber, UpdateStockLevelDto updateStockLevelDto)
         {
-            var stockLevel = new StockLevel(
-                updateStockLevelDto.ArticleNumber,
-                updateStockLevelDto.StockLevel
-                );
+            var stockLevel = Context.StockLevel.
+                FirstOrDefault(x => x.ArticleNumber == updateStockLevelDto.ArticleNumber);
 
-            Context.StockLevel.Add(stockLevel);
+            if (stockLevel == null)
+            {
+                stockLevel = new StockLevel(
+                    updateStockLevelDto.ArticleNumber,
+                    updateStockLevelDto.StockLevel
+                    );
+
+                Context.StockLevel.Add(stockLevel);
+
+            }
+            else
+            {
+                stockLevel.Stock = updateStockLevelDto.StockLevel;
+            }
 
             Context.SaveChanges();
 
-            return NoContent();
+            return NoContent(); // Returns 204 No Content
         }
 
         [HttpGet]
