@@ -4,17 +4,17 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:61907",
+      "applicationUrl": "http://localhost:41949",
       "sslPort": 0
     }
   },
   "profiles": {
-    "AnimimoMicroservices.NewCatalogService": {
+    "AnimimoMicroservices.NewBasketService": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": false,
+      "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5600",
+      "applicationUrl": "http://localhost:5190",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
