@@ -20,7 +20,17 @@
       "ProjectGuid": "c5255b4a-860a-4200-9235-ee19b6c7f249",
       "DisplayName": "AnimimoMicroservices.NewCatalogService",
       "ColorIndex": 2
+    },
+    "d9d52c9d-cd32-46e8-a90c-aba55c988776": {
+      "ProjectGuid": "d9d52c9d-cd32-46e8-a90c-aba55c988776",
+      "DisplayName": "AnimimoMicroservices.NewBasketService",
+      "ColorIndex": 3
+    },
+    "6b6922f7-f5d5-4fb3-9c85-9600f0046800": {
+      "ProjectGuid": "6b6922f7-f5d5-4fb3-9c85-9600f0046800",
+      "DisplayName": "AnimimoMicroservices.NewerBasketService",
+      "ColorIndex": 4
     }
   },
-  "NextColorIndex": 3
+  "NextColorIndex": 5
 }

@@ -10,7 +10,6 @@ C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservice
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.StockService\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.StockService\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.StockService\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.StockService\obj\Debug\net6.0\AnimimoMicroservices.StockService.csproj.AssemblyReference.cache
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.StockService\obj\Debug\net6.0\AnimimoMicroservices.StockService.GeneratedMSBuildEditorConfig.editorconfig
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.StockService\obj\Debug\net6.0\AnimimoMicroservices.StockService.AssemblyInfoInputs.cache
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.StockService\obj\Debug\net6.0\AnimimoMicroservices.StockService.AssemblyInfo.cs
