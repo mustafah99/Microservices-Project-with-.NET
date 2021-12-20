@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "e2b787ae-87d7-40d4-b122-23dd81504eab": {
+      "ProjectGuid": "e2b787ae-87d7-40d4-b122-23dd81504eab",
+      "DisplayName": "AnimimoMicroservices.StockService",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "45aa3389-36a5-40c9-8daa-60521b5c6491": {
+      "ProjectGuid": "45aa3389-36a5-40c9-8daa-60521b5c6491",
+      "DisplayName": "AnimimoMicroservices.CatalogService",
+      "ColorIndex": 1
+    },
+    "c5255b4a-860a-4200-9235-ee19b6c7f249": {
+      "ProjectGuid": "c5255b4a-860a-4200-9235-ee19b6c7f249",
+      "DisplayName": "AnimimoMicroservices.NewCatalogService",
+      "ColorIndex": 2
+    }
+  },
+  "NextColorIndex": 3
+}

@@ -1,4 +1,11 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using AnimimoMicroservices.NewCatalogService.Data;
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AnimimoMicroservicesNewCatalogServiceContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AnimimoMicroservicesNewCatalogServiceContext")));
+
 
 // Add services to the container.
 
