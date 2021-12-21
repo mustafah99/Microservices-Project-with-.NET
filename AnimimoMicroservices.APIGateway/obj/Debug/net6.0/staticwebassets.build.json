@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "PX5kDqjG2lg0gaXWnzWYl6sihaVjXrpsZqTRklELxkY=",
+  "Source": "AnimimoMicroservices.APIGateway",
+  "BasePath": "_content/AnimimoMicroservices.APIGateway",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,4 +1,10 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using AnimimoMicroservices.NewOrderService.Data;
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AnimimoMicroservicesNewOrderServiceContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AnimimoMicroservicesNewOrderServiceContext")));
 
 // Add services to the container.
 
