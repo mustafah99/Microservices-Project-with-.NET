@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnimimoMicroservices.StockService", "AnimimoMicroservices.StockService\AnimimoMicroservices.StockService.csproj", "{E2B787AE-87D7-40D4-B122-23DD81504EAB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnimimoMicroservices.NewCatalogService", "AnimimoMicroservices.NewCatalogService\AnimimoMicroservices.NewCatalogService.csproj", "{C5255B4A-860A-4200-9235-EE19B6C7F249}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnimimoMicroservices.NewerBasketService", "AnimimoMicroservices.NewerBasketService\AnimimoMicroservices.NewerBasketService.csproj", "{6B6922F7-F5D5-4FB3-9C85-9600F0046800}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimimoMicroservices.NewOrderService", "AnimimoMicroservices.NewOrderService\AnimimoMicroservices.NewOrderService.csproj", "{75FFB2D8-9683-425F-B001-14EECC8037CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimimoMicroservices.APIGateway", "AnimimoMicroservices.APIGateway\AnimimoMicroservices.APIGateway.csproj", "{B7487365-70E2-49C4-835D-691A08A0B667}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E2B787AE-87D7-40D4-B122-23DD81504EAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2B787AE-87D7-40D4-B122-23DD81504EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E2B787AE-87D7-40D4-B122-23DD81504EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2B787AE-87D7-40D4-B122-23DD81504EAB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C5255B4A-860A-4200-9235-EE19B6C7F249}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C5255B4A-860A-4200-9235-EE19B6C7F249}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5255B4A-860A-4200-9235-EE19B6C7F249}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{75FFB2D8-9683-425F-B001-14EECC8037CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75FFB2D8-9683-425F-B001-14EECC8037CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75FFB2D8-9683-425F-B001-14EECC8037CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7487365-70E2-49C4-835D-691A08A0B667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7487365-70E2-49C4-835D-691A08A0B667}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7487365-70E2-49C4-835D-691A08A0B667}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7487365-70E2-49C4-835D-691A08A0B667}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

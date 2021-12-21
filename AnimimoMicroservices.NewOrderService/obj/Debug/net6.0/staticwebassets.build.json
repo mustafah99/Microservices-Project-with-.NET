@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "r5Uu9hyWZSbZEf0T5CmldeSg6gN1gmgxU+oj8LEldMI=",
+  "Source": "AnimimoMicroservices.NewOrderService",
+  "BasePath": "_content/AnimimoMicroservices.NewOrderService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
