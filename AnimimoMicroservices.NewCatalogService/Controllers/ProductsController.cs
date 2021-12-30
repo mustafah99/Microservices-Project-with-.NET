@@ -13,11 +13,11 @@ namespace AnimimoMicroservices.NewCatalogService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CatalogsController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly AnimimoMicroservicesNewCatalogServiceContext _context;
 
-        public CatalogsController(AnimimoMicroservicesNewCatalogServiceContext context)
+        public ProductsController(AnimimoMicroservicesNewCatalogServiceContext context)
         {
             _context = context;
         }

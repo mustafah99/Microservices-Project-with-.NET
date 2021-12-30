@@ -30,7 +30,17 @@
       "ProjectGuid": "6b6922f7-f5d5-4fb3-9c85-9600f0046800",
       "DisplayName": "AnimimoMicroservices.NewerBasketService",
       "ColorIndex": 4
+    },
+    "75ffb2d8-9683-425f-b001-14eecc8037ca": {
+      "ProjectGuid": "75ffb2d8-9683-425f-b001-14eecc8037ca",
+      "DisplayName": "AnimimoMicroservices.NewOrderService",
+      "ColorIndex": 5
+    },
+    "b7487365-70e2-49c4-835d-691a08a0b667": {
+      "ProjectGuid": "b7487365-70e2-49c4-835d-691a08a0b667",
+      "DisplayName": "AnimimoMicroservices.APIGateway",
+      "ColorIndex": 6
     }
   },
-  "NextColorIndex": 5
+  "NextColorIndex": 7
 }

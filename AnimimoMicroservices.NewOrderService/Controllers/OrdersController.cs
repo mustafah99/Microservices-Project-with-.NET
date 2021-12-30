@@ -10,13 +10,14 @@ using AnimimoMicroservices.NewOrderService.DTO;
 
 namespace AnimimoMicroservices.NewOrderService.Controllers
 {
+    // Changed from OrderDTOController to OrdersController
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderDTOController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly AnimimoMicroservicesNewOrderServiceContext _context;
 
-        public OrderDTOController(AnimimoMicroservicesNewOrderServiceContext context)
+        public OrdersController(AnimimoMicroservicesNewOrderServiceContext context)
         {
             _context = context;
         }
@@ -30,9 +31,12 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
 
         // GET: api/OrderDTO/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<OrderDTO>> GetOrderDTO(string id)
+        public ActionResult<OrderDTO> GetOrderDTO(string id)
         {
-            var orderDTO = await _context.OrderDTO.FindAsync(id);
+            //var orderDTO = await _context.OrderDTO.FindAsync(id);
+
+            var orderDTO = _context.OrderDTO
+                .FirstOrDefault(x => x.Identifier == id);
 
             if (orderDTO == null)
             {
@@ -78,6 +82,10 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
         [HttpPost]
         public async Task<ActionResult<OrderDTO>> PostOrderDTO(OrderDTO orderDTO)
         {
+            // TODO Kontakta basket service (GET /api/baskets/{orderDTO.Identifier})
+
+            //  generera order (Order, OrderLine)
+
             _context.OrderDTO.Add(orderDTO);
             try
             {

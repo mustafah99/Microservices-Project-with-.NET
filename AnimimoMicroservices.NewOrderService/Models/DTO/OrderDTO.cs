@@ -8,5 +8,10 @@ namespace AnimimoMicroservices.NewOrderService.DTO
         public int OrderID { get; set; }
         public string Identifier { get; set; }
         public string Customer { get; set; }
+
+        public OrderDTO(string identifier)
+        {
+            Identifier = identifier;
+        }
     }
 }
