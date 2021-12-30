@@ -7,6 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AnimimoMicroservices.NewOrderService.Data;
 using AnimimoMicroservices.NewOrderService.DTO;
+using System.Text.Json;
+using System.Text;
+using static System.Net.Mime.MediaTypeNames;
+using System.Net.Http;
+using Microsoft.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace AnimimoMicroservices.NewOrderService.Controllers
 {
@@ -82,9 +88,13 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
         [HttpPost]
         public async Task<ActionResult<OrderDTO>> PostOrderDTO(OrderDTO orderDTO)
         {
-            // TODO Kontakta basket service (GET /api/baskets/{orderDTO.Identifier})
+            // TODO Contact BasketService (GET /api/Baskets/{identifier} and take out 'identifier' and post to BasketService
 
-            //  generera order (Order, OrderLine)
+            var httpClient = new HttpClient();
+            var json = JsonConvert.SerializeObject(orderDTO);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // Generate Order (Order, OrderLine)
 
             _context.OrderDTO.Add(orderDTO);
             try
@@ -102,6 +112,8 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
                     throw;
                 }
             }
+
+            await httpClient.PutAsync($"https://localhost:5500/api/Basket/{orderDTO.Identifier}", content);
 
             return CreatedAtAction("GetOrderDTO", new { id = orderDTO.Identifier }, orderDTO);
         }

@@ -260,3 +260,5 @@ C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservice
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\obj\Debug\net6.0\ref\AnimimoMicroservices.NewOrderService.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\obj\Debug\net6.0\AnimimoMicroservices.NewOrderService.pdb
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\obj\Debug\net6.0\AnimimoMicroservices.NewOrderService.genruntimeconfig.cache
+C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

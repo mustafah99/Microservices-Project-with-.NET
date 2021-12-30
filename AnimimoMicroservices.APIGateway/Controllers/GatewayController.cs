@@ -65,7 +65,7 @@ namespace AnimimoMicroservices.APIGateway.Controllers
             var httpClient = httpClientFactory.CreateClient();
 
             using var httpResponseMessage =
-                await httpClient.PostAsync($"https://localhost:5500/api/Basket/{identifier}", postEntry);
+                await httpClient.PutAsync($"https://localhost:5500/api/Basket/{identifier}", postEntry);
 
             if (!httpResponseMessage.IsSuccessStatusCode)
                 throw new Exception();
