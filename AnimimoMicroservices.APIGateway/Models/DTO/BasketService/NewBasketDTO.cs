@@ -1,4 +1,5 @@
-﻿namespace AnimimoMicroservices.APIGateway.DTO.BasketService
+﻿
+namespace AnimimoMicroservices.APIGateway.DTO.BasketService
 {
     public class ItemDTO
     {

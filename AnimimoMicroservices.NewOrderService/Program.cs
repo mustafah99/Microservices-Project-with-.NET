@@ -7,7 +7,7 @@ builder.Services.AddDbContext<AnimimoMicroservicesNewOrderServiceContext>(option
     options.UseSqlServer(builder.Configuration.GetConnectionString("AnimimoMicroservicesNewOrderServiceContext")));
 
 // Add services to the container.
-
+builder.Services.AddHttpClient();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

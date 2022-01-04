@@ -23,6 +23,8 @@ namespace AnimimoMicroservices.APIGateway.Controllers
         {
             // TODO Kontakta basket service (GET /api/baskets/{orderDTO.Identifier})
 
+
+
             //  generera order (Order, OrderLine)
 
             var orderJson = new StringContent(
