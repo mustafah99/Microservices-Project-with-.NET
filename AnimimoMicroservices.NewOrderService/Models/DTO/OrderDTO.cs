@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AnimimoMicroservices.NewOrderService.Models.DTO;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AnimimoMicroservices.NewOrderService.DTO
 {
@@ -15,6 +17,7 @@ namespace AnimimoMicroservices.NewOrderService.DTO
             Identifier = identifier;
         }
 
-        public IEnumerable<NewBasketDTO> Basket { get; set; } = new List<NewBasketDTO>();
+        [NotMapped]
+        public IEnumerable<BasketEntryDto> Items { get; set; } = new List<BasketEntryDto>();
     }
 }

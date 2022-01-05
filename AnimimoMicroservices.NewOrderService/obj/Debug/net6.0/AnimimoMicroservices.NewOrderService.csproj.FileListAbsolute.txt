@@ -9,6 +9,7 @@ C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservice
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\Humanizer.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\MessagePack.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\MessagePack.Annotations.dll
+C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\System.Net.Http.Formatting.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\Microsoft.Build.Locator.dll
@@ -51,6 +52,7 @@ C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservice
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\NuGet.Common.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\NuGet.Configuration.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\NuGet.DependencyResolver.Core.dll
@@ -260,5 +262,3 @@ C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservice
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\obj\Debug\net6.0\ref\AnimimoMicroservices.NewOrderService.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\obj\Debug\net6.0\AnimimoMicroservices.NewOrderService.pdb
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\obj\Debug\net6.0\AnimimoMicroservices.NewOrderService.genruntimeconfig.cache
-C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\System.Net.Http.Formatting.dll
-C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.NewOrderService\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

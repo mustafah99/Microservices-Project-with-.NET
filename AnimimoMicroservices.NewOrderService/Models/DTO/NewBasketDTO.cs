@@ -1,5 +1,11 @@
-﻿namespace AnimimoMicroservices.NewOrderService.DTO
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AnimimoMicroservices.NewOrderService.DTO
 {
+    [Keyless]
+    [NotMapped]
     public class NewBasketDTO
     {
         public class ItemDTO

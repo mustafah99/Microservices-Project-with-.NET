@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using static System.Net.Mime.MediaTypeNames;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace AnimimoMicroservices.NewOrderService.Controllers
@@ -18,22 +19,28 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IHttpClientFactory httpClientFactory;
+        private readonly AnimimoMicroservicesNewOrderServiceContext _context;
 
 
-        // I want to use this constructor as well as 
-        [ActivatorUtilitiesConstructor]
-        public OrdersController(IHttpClientFactory httpClientFactory)
+        public OrdersController(IHttpClientFactory httpClientFactory, AnimimoMicroservicesNewOrderServiceContext context)
         {
+            _context = context;
             this.httpClientFactory = httpClientFactory;
         }
 
-        private readonly AnimimoMicroservicesNewOrderServiceContext _context;
 
-        // this one
-        public OrdersController(AnimimoMicroservicesNewOrderServiceContext context)
-        {
-            _context = context;
-        }
+        //// I want to use this constructor as well as 
+        //[ActivatorUtilitiesConstructor]
+        //public OrdersController(IHttpClientFactory httpClientFactory)
+        //{
+        //    this.httpClientFactory = httpClientFactory;
+        //}
+
+        //// this one
+        //public OrdersController(AnimimoMicroservicesNewOrderServiceContext context)
+        //{
+        //    _context = context;
+        //}
 
         // GET: api/OrderDTO
         [HttpGet]
@@ -138,6 +145,23 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
 
         // FETCH FROM BASKET
 
+        // SLÅ IHOP BASKET OCH ORDER
+        [HttpGet("basket/together/{identifier}")]
+        public async Task<IActionResult> GetOrderAndBasket(string identifier)
+        {
+            // Aggregera data från två servicar, och returnerar patient 
+            // samt dennas journal.
+            var patientDto = await FetchOrder(identifier);
+
+            if (patientDto == null)
+                return NotFound(); // 404 Not Found
+
+            patientDto.Items = await FetchBasketEntries(identifier);
+
+            return Ok(patientDto); // 200 OK
+        }
+        // OVANFÖR
+
         // POST: api/OrderDTO
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -146,11 +170,18 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
             // TODO Contact BasketService (GET /api/Baskets/{identifier} and take out 'items array with objects inside' and post to Order
 
             var httpClient = new HttpClient();
+            // FETCHING BASKET
+            var items = await FetchBasketEntries(orderDTO.Identifier);
+            // UP HERE
             var json = JsonConvert.SerializeObject(orderDTO);
+            // Want to convert fetched basket to Json
+            var jss = JsonConvert.SerializeObject(items);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var content1 = new StringContent(jss, Encoding.UTF8, "application/json");
 
-            // Generate Order (Order, OrderLine)
+            //Generate Order(Order, OrderLine)
 
+            // I want to send the fetched basket here with my orderDTO
             _context.OrderDTO.Add(orderDTO);
             try
             {
@@ -168,10 +199,49 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
                 }
             }
 
-            await httpClient.PutAsync($"https://localhost:5500/api/Basket/{orderDTO.Identifier}", content);
+            //await httpClient.PutAsync($"https://localhost:5500/api/Basket/{orderDTO.Identifier}", content);
 
             return CreatedAtAction("GetOrderDTO", new { id = orderDTO.Identifier }, orderDTO);
         }
+
+        // GET ORDER
+        private async Task<OrderDTO> FetchOrder(string identifier)
+        {
+            var httpRequestMessage = new HttpRequestMessage(
+               HttpMethod.Get,
+               $"http://localhost:5700/api/Orders/{identifier}")
+            {
+                Headers = { { HeaderNames.Accept, "application/json" }, }
+            };
+
+            var httpClient = httpClientFactory.CreateClient();
+
+            using var httpResponseMessage =
+                await httpClient.SendAsync(httpRequestMessage);
+
+            OrderDTO orderDTO = null;
+
+            if (!httpResponseMessage.IsSuccessStatusCode)
+                return orderDTO;
+
+            using var contentStream =
+                await httpResponseMessage.Content.ReadAsStreamAsync();
+
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+            var patientServicePatientDto = await JsonSerializer.DeserializeAsync
+                    <OrderDTO>(contentStream, options);
+
+            orderDTO = new OrderDTO(patientServicePatientDto.Identifier)
+            {
+                OrderID = patientServicePatientDto.OrderID,
+                Identifier = patientServicePatientDto.Identifier,
+                Customer = patientServicePatientDto.Customer
+            };
+
+            return orderDTO; // 200 OK
+        }
+        // GET ORDER
 
         // DELETE: api/OrderDTO/5
         [HttpDelete("{id}")]
