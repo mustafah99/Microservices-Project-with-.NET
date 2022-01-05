@@ -147,7 +147,7 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
 
         // SLÅ IHOP BASKET OCH ORDER
         [HttpGet("basket/together/{identifier}")]
-        public async Task<IActionResult> GetOrderAndBasket(string identifier)
+        public async Task<IActionResult> GetOrderAndBasket(string identifier, OrderDTO orderDTO)
         {
             // Aggregera data från två servicar, och returnerar patient 
             // samt dennas journal.
@@ -171,13 +171,18 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
 
             var httpClient = new HttpClient();
             // FETCHING BASKET
-            var items = await FetchBasketEntries(orderDTO.Identifier);
+            //var items = await FetchBasketEntries(orderDTO.Identifier);
+
+            // Get Basket and Order by ID
+
+            //var vart = await GetOrderAndBasket(orderDTO.Identifier);
+
             // UP HERE
             var json = JsonConvert.SerializeObject(orderDTO);
             // Want to convert fetched basket to Json
-            var jss = JsonConvert.SerializeObject(items);
+            //var jss = JsonConvert.SerializeObject(items);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var content1 = new StringContent(jss, Encoding.UTF8, "application/json");
+            //var content1 = new StringContent(jss, Encoding.UTF8, "application/json");
 
             //Generate Order(Order, OrderLine)
 
