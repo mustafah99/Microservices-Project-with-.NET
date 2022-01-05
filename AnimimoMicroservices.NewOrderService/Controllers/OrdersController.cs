@@ -49,6 +49,12 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
             return await _context.OrderDTO.ToListAsync();
         }
 
+        [HttpGet("/new")]
+        public async Task<ActionResult<IEnumerable<OrderLine>>> getOrderLine()
+        {
+            return await _context.OrderLine.ToListAsync();
+        }
+
         // GET: api/OrderDTO/5
         [HttpGet("{id}")]
         public ActionResult<OrderDTO> GetOrderDTO(string id)
@@ -146,17 +152,28 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
         // FETCH FROM BASKET
 
         // SLÅ IHOP BASKET OCH ORDER
-        [HttpGet("basket/together/{identifier}")]
-        public async Task<IActionResult> GetOrderAndBasket(string identifier, OrderDTO orderDTO)
+        [HttpPost("basket/together/{identifier}")]
+        public async Task<IActionResult> GetOrderAndBasket(string identifier)
         {
             // Aggregera data från två servicar, och returnerar patient 
             // samt dennas journal.
+
             var patientDto = await FetchOrder(identifier);
 
             if (patientDto == null)
                 return NotFound(); // 404 Not Found
 
             patientDto.Items = await FetchBasketEntries(identifier);
+
+            var journalEntryJson = new StringContent(
+                JsonSerializer.Serialize(patientDto),
+                Encoding.UTF8,
+                Application.Json);
+
+            var httpClient = httpClientFactory.CreateClient();
+
+            using var httpResponseMessage =
+                await httpClient.PostAsync($"http://localhost:5700/new/post", journalEntryJson);
 
             return Ok(patientDto); // 200 OK
         }
@@ -169,13 +186,12 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
         {
             // TODO Contact BasketService (GET /api/Baskets/{identifier} and take out 'items array with objects inside' and post to Order
 
-            var httpClient = new HttpClient();
+            //var httpClient = new HttpClient();
             // FETCHING BASKET
             //var items = await FetchBasketEntries(orderDTO.Identifier);
+            var httpClient = httpClientFactory.CreateClient();
 
             // Get Basket and Order by ID
-
-            //var vart = await GetOrderAndBasket(orderDTO.Identifier);
 
             // UP HERE
             var json = JsonConvert.SerializeObject(orderDTO);
@@ -183,6 +199,8 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
             //var jss = JsonConvert.SerializeObject(items);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             //var content1 = new StringContent(jss, Encoding.UTF8, "application/json");
+
+            //var patientDto = await GetOrderAndBasket(orderDTO.Identifier);
 
             //Generate Order(Order, OrderLine)
 
@@ -206,8 +224,43 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
 
             //await httpClient.PutAsync($"https://localhost:5500/api/Basket/{orderDTO.Identifier}", content);
 
+            await httpClient.PostAsync($"http://localhost:5700/api/Orders/basket/together/{orderDTO.Identifier}", content);
+
             return CreatedAtAction("GetOrderDTO", new { id = orderDTO.Identifier }, orderDTO);
         }
+
+        // ORDERLINE POST
+        [HttpPost("/new/post")]
+        public async Task<ActionResult<OrderLine>> PostOrderLine(OrderLine orderLine)
+        {
+            var httpClient = new HttpClient();
+            
+            var json = JsonConvert.SerializeObject(orderLine);
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            
+            _context.OrderLine.Add(orderLine);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (OrderDTOExists(orderLine.Identifier))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            //await httpClient.PutAsync($"https://localhost:5500/api/Basket/{orderDTO.Identifier}", content);
+
+            return CreatedAtAction("GetOrderDTO", new { id = orderLine.Identifier }, orderLine);
+        }
+        // ORDERLINE POST
 
         // GET ORDER
         private async Task<OrderDTO> FetchOrder(string identifier)

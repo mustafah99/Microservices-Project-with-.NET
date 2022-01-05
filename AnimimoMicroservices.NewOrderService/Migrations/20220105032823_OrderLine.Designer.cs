@@ -3,6 +3,7 @@ using AnimimoMicroservices.NewOrderService.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AnimimoMicroservices.NewOrderService.Migrations
 {
     [DbContext(typeof(AnimimoMicroservicesNewOrderServiceContext))]
-    partial class AnimimoMicroservicesNewOrderServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20220105032823_OrderLine")]
+    partial class OrderLine
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,20 +40,6 @@ namespace AnimimoMicroservices.NewOrderService.Migrations
                     b.HasKey("OrderID");
 
                     b.ToTable("OrderDTO");
-                });
-
-            modelBuilder.Entity("AnimimoMicroservices.NewOrderService.Models.DTO.OrderLine", b =>
-                {
-                    b.Property<string>("Customer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Identifier")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrderID")
-                        .HasColumnType("int");
-
-                    b.ToTable("OrderLine");
                 });
 #pragma warning restore 612, 618
         }
