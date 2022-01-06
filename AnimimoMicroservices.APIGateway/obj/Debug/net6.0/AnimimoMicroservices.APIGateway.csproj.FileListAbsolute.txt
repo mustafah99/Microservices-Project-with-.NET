@@ -10,7 +10,6 @@ C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservice
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.APIGateway\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.APIGateway\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.APIGateway\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.APIGateway\obj\Debug\net6.0\AnimimoMicroservices.APIGateway.csproj.AssemblyReference.cache
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.APIGateway\obj\Debug\net6.0\AnimimoMicroservices.APIGateway.GeneratedMSBuildEditorConfig.editorconfig
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.APIGateway\obj\Debug\net6.0\AnimimoMicroservices.APIGateway.AssemblyInfoInputs.cache
 C:\Workspace\ECUtbildning\Microservices\AnimimoMicroservices\AnimimoMicroservices.APIGateway\obj\Debug\net6.0\AnimimoMicroservices.APIGateway.AssemblyInfo.cs

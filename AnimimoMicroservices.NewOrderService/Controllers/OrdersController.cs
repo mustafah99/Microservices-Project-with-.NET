@@ -1,26 +1,29 @@
-﻿using AnimimoMicroservices.NewOrderService.Data;
-using AnimimoMicroservices.NewOrderService.DTO;
-using AnimimoMicroservices.NewOrderService.Models.DTO;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AnimimoMicroservices.NewOrderService.Data;
+using AnimimoMicroservices.NewOrderService.Models.Domain;
+using AnimimoMicroservices.NewOrderService.Models.DTO;
 using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
+using System.Text;
 using static System.Net.Mime.MediaTypeNames;
+using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using AnimimoMicroservices.NewOrderService.DTO;
 
 namespace AnimimoMicroservices.NewOrderService.Controllers
 {
-    // Changed from OrderDTOController to OrdersController
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly IHttpClientFactory httpClientFactory;
         private readonly AnimimoMicroservicesNewOrderServiceContext _context;
-
+        private readonly IHttpClientFactory httpClientFactory;
 
         public OrdersController(IHttpClientFactory httpClientFactory, AnimimoMicroservicesNewOrderServiceContext context)
         {
@@ -28,84 +31,9 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
             this.httpClientFactory = httpClientFactory;
         }
 
-
-        //// I want to use this constructor as well as 
-        //[ActivatorUtilitiesConstructor]
-        //public OrdersController(IHttpClientFactory httpClientFactory)
-        //{
-        //    this.httpClientFactory = httpClientFactory;
-        //}
-
-        //// this one
-        //public OrdersController(AnimimoMicroservicesNewOrderServiceContext context)
-        //{
-        //    _context = context;
-        //}
-
-        // GET: api/OrderDTO
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetOrderDTO()
-        {
-            return await _context.OrderDTO.ToListAsync();
-        }
-
-        [HttpGet("/new")]
-        public async Task<ActionResult<IEnumerable<OrderLine>>> getOrderLine()
-        {
-            return await _context.OrderLine.ToListAsync();
-        }
-
-        // GET: api/OrderDTO/5
-        [HttpGet("{id}")]
-        public ActionResult<OrderDTO> GetOrderDTO(string id)
-        {
-            //var orderDTO = await _context.OrderDTO.FindAsync(id);
-
-            var orderDTO = _context.OrderDTO
-                .FirstOrDefault(x => x.Identifier == id);
-
-            if (orderDTO == null)
-            {
-                return NotFound();
-            }
-
-            return orderDTO;
-        }
-
-        // PUT: api/OrderDTO/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrderDTO(string id, OrderDTO orderDTO)
-        {
-            if (id != orderDTO.Identifier)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(orderDTO).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderDTOExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // FETCH FROM BASKET BY IDENTIFIER TO POST TO ORDER
-        [HttpGet("basket/{identifier}")]
-        public async Task<IEnumerable<BasketEntryDto>> FetchBasketEntries(string identifier)
+        // GET: https://localhost:5500/api/Basket/{identifier}
+        [HttpGet("/basket/{identifier}")]
+        public async Task<BasketDto> GetBasketItems(string identifier)
         {
             var httpRequestMessage = new HttpRequestMessage(
                HttpMethod.Get,
@@ -119,208 +47,151 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
             using var httpResponseMessage =
                 await httpClient.SendAsync(httpRequestMessage);
 
-            var basketEntries = Enumerable.Empty<BasketEntryDto>();
+            BasketDto items = null;
 
             if (!httpResponseMessage.IsSuccessStatusCode)
-                return basketEntries;
+                return items;
 
             using var contentStream =
                 await httpResponseMessage.Content.ReadAsStreamAsync();
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-            var basketDTO = await JsonSerializer.DeserializeAsync
+            var basketDto = await System.Text.Json.JsonSerializer.DeserializeAsync
                     <BasketDto>(contentStream, options);
 
-            //basketDTO = new NewBasketDTO.ItemDTO
-            //{
-            //    ProductId = basketDTO.ProductId,
-            //    Quantity = basketDTO.Quantity
-            //};
+            //items = basketDto.Items.Select(x =>
+            //    new BasketEntryDto
+            //    {
+            //        ProductId = x.ProductId,
+            //        Quantity = x.Quantity,
+            //    }
+            //);
 
-            basketEntries = basketDTO.Items.Select(x =>
-                new BasketEntryDto
-                {
-                    ProductId = x.ProductId,
-                    Quantity = x.Quantity
-                }
-            );
+            items = new BasketDto
+            {
+                Identifier = basketDto.Identifier,
+                Items = basketDto.Items,
+            };
 
-            return basketEntries; // 200 OK
-        }
-
-        // FETCH FROM BASKET
-
-        // SLÅ IHOP BASKET OCH ORDER
-        [HttpPost("basket/together/{identifier}")]
-        public async Task<IActionResult> GetOrderAndBasket(string identifier)
-        {
-            // Aggregera data från två servicar, och returnerar patient 
-            // samt dennas journal.
-
-            var patientDto = await FetchOrder(identifier);
-
-            if (patientDto == null)
-                return NotFound(); // 404 Not Found
-
-            patientDto.Items = await FetchBasketEntries(identifier);
-
-            var journalEntryJson = new StringContent(
-                JsonSerializer.Serialize(patientDto),
+            var entryJson = new StringContent(
+                JsonSerializer.Serialize(items),
                 Encoding.UTF8,
                 Application.Json);
 
-            var httpClient = httpClientFactory.CreateClient();
+            await httpClient.PostAsync($"http://localhost:5700/api/Orders", entryJson);
 
-            using var httpResponseMessage =
-                await httpClient.PostAsync($"http://localhost:5700/new/post", journalEntryJson);
-
-            return Ok(patientDto); // 200 OK
-        }
-        // OVANFÖR
-
-        // POST: api/OrderDTO
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<OrderDTO>> PostOrderDTO(OrderDTO orderDTO)
-        {
-            // TODO Contact BasketService (GET /api/Baskets/{identifier} and take out 'items array with objects inside' and post to Order
-
-            //var httpClient = new HttpClient();
-            // FETCHING BASKET
-            //var items = await FetchBasketEntries(orderDTO.Identifier);
-            var httpClient = httpClientFactory.CreateClient();
-
-            // Get Basket and Order by ID
-
-            // UP HERE
-            var json = JsonConvert.SerializeObject(orderDTO);
-            // Want to convert fetched basket to Json
-            //var jss = JsonConvert.SerializeObject(items);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            //var content1 = new StringContent(jss, Encoding.UTF8, "application/json");
-
-            //var patientDto = await GetOrderAndBasket(orderDTO.Identifier);
-
-            //Generate Order(Order, OrderLine)
-
-            // I want to send the fetched basket here with my orderDTO
-            _context.OrderDTO.Add(orderDTO);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (OrderDTOExists(orderDTO.Identifier))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            //await httpClient.PutAsync($"https://localhost:5500/api/Basket/{orderDTO.Identifier}", content);
-
-            await httpClient.PostAsync($"http://localhost:5700/api/Orders/basket/together/{orderDTO.Identifier}", content);
-
-            return CreatedAtAction("GetOrderDTO", new { id = orderDTO.Identifier }, orderDTO);
+            return items; // 200 OK
         }
 
-        // ORDERLINE POST
-        [HttpPost("/new/post")]
-        public async Task<ActionResult<OrderLine>> PostOrderLine(OrderLine orderLine)
+        // GET: api/Orders
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
         {
-            var httpClient = new HttpClient();
-            
-            var json = JsonConvert.SerializeObject(orderLine);
-
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            
-            _context.OrderLine.Add(orderLine);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (OrderDTOExists(orderLine.Identifier))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            //await httpClient.PutAsync($"https://localhost:5500/api/Basket/{orderDTO.Identifier}", content);
-
-            return CreatedAtAction("GetOrderDTO", new { id = orderLine.Identifier }, orderLine);
+            return await _context.Order.ToListAsync();
         }
-        // ORDERLINE POST
 
-        // GET ORDER
-        private async Task<OrderDTO> FetchOrder(string identifier)
+        // GET: api/OrderLine
+        [HttpGet("/api/OrderLine")]
+        public async Task<ActionResult<IEnumerable<OrderLine>>> GetOrderLine()
         {
-            var httpRequestMessage = new HttpRequestMessage(
-               HttpMethod.Get,
-               $"http://localhost:5700/api/Orders/{identifier}")
-            {
-                Headers = { { HeaderNames.Accept, "application/json" }, }
-            };
-
-            var httpClient = httpClientFactory.CreateClient();
-
-            using var httpResponseMessage =
-                await httpClient.SendAsync(httpRequestMessage);
-
-            OrderDTO orderDTO = null;
-
-            if (!httpResponseMessage.IsSuccessStatusCode)
-                return orderDTO;
-
-            using var contentStream =
-                await httpResponseMessage.Content.ReadAsStreamAsync();
-
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-
-            var patientServicePatientDto = await JsonSerializer.DeserializeAsync
-                    <OrderDTO>(contentStream, options);
-
-            orderDTO = new OrderDTO(patientServicePatientDto.Identifier)
-            {
-                OrderID = patientServicePatientDto.OrderID,
-                Identifier = patientServicePatientDto.Identifier,
-                Customer = patientServicePatientDto.Customer
-            };
-
-            return orderDTO; // 200 OK
+            return await _context.OrderLine.ToListAsync();
         }
-        // GET ORDER
 
-        // DELETE: api/OrderDTO/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrderDTO(string id)
+        // GET: api/Orders/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Order>> GetOrder(int id)
         {
-            var orderDTO = await _context.OrderDTO.FindAsync(id);
-            if (orderDTO == null)
+            var order = await _context.Order.FindAsync(id);
+
+            if (order == null)
             {
                 return NotFound();
             }
 
-            _context.OrderDTO.Remove(orderDTO);
+            return order;
+        }
+
+        // PUT: api/Orders/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutOrder(int id, Order order)
+        {
+            if (id != order.OrderID)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(order).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/Orders
+        [HttpPost]
+        public async Task<ActionResult<Order>> PostOrder(Order order)
+        {
+            var httpClient = httpClientFactory.CreateClient();
+
+            var json = JsonConvert.SerializeObject(order);
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            await httpClient.PostAsync($"http://localhost:5700/basket/{order.Identifier}", content);
+
+            _context.Order.Add(order);
+            await _context.SaveChangesAsync();
+
+          
+
+            return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
+        }
+
+        // POST: api/OrderLine
+        [HttpPost("/api/OrderLine")]
+        public async Task<ActionResult<Order>> PostOrderLine(OrderLine orderLine)
+        {
+            _context.OrderLine.Add(orderLine);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetOrder", new { id = orderLine.Id }, orderLine);
+        }
+
+        // DELETE: api/Orders/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOrder(int id)
+        {
+            var order = await _context.Order.FindAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            _context.Order.Remove(order);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool OrderDTOExists(string id)
+        private bool OrderExists(int id)
         {
-            return _context.OrderDTO.Any(e => e.Identifier == id);
+            return _context.Order.Any(e => e.OrderID == id);
         }
-
     }
 }

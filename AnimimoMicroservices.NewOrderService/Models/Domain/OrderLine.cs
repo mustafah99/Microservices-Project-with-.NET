@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AnimimoMicroservices.NewOrderService.Models.DTO
+namespace AnimimoMicroservices.NewOrderService.Models.Domain
 {
-    public class BasketEntryDto
+    public class OrderLine
     {
+        public int Id { get; set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
     }

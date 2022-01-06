@@ -12,7 +12,7 @@
     "AnimimoMicroservices.NewCatalogService": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5600",
       "environmentVariables": {

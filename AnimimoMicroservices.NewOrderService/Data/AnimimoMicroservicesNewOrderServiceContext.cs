@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using AnimimoMicroservices.NewOrderService.DTO;
 using AnimimoMicroservices.NewOrderService.Models;
 
 namespace AnimimoMicroservices.NewOrderService.Data
@@ -15,8 +14,9 @@ namespace AnimimoMicroservices.NewOrderService.Data
         {
         }
 
-        public DbSet<AnimimoMicroservices.NewOrderService.DTO.OrderDTO> OrderDTO { get; set; }
-        public DbSet<AnimimoMicroservices.NewOrderService.Models.DTO.OrderLine> OrderLine { get; set; }
+        public DbSet<Models.Domain.Order> Order { get; set; }
+        public DbSet<Models.Domain.OrderLine> OrderLine { get; set; }
+
 
     }
 }
