@@ -158,6 +158,7 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
             //await httpClient.PostAsync($"http://localhost:5700/basket/{order.Identifier}", content);
 
             _context.Order.Add(order);
+            await _context.SaveChangesAsync();
 
             // kod här
             var basket = await GetBasketItems(postOrderDto.Identifier);
@@ -177,7 +178,8 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
 
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
+            //return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
+            return Ok(new { orderId = order.OrderID });
         }
 
         // POST: api/OrderLine
