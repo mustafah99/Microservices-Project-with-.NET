@@ -38,7 +38,7 @@ namespace AnimimoMicroservices.NewOrderService.Migrations
 
                     b.HasKey("OrderID");
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("AnimimoMicroservices.NewOrderService.Models.Domain.OrderLine", b =>
@@ -62,7 +62,7 @@ namespace AnimimoMicroservices.NewOrderService.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("OrderLine");
+                    b.ToTable("OrderLine", (string)null);
                 });
 
             modelBuilder.Entity("AnimimoMicroservices.NewOrderService.Models.Domain.OrderLine", b =>

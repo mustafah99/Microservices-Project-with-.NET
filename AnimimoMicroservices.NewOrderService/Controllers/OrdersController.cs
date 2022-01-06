@@ -74,12 +74,12 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
                 Items = basketDto.Items,
             };
 
-            var entryJson = new StringContent(
-                JsonSerializer.Serialize(items),
-                Encoding.UTF8,
-                Application.Json);
+            //var entryJson = new StringContent(
+            //    JsonSerializer.Serialize(items),
+            //    Encoding.UTF8,
+            //    Application.Json);
 
-            await httpClient.PostAsync($"http://localhost:5700/api/Orders", entryJson);
+            //await httpClient.PostAsync($"http://localhost:5700/api/Orders", entryJson);
 
             return items; // 200 OK
         }
@@ -145,20 +145,37 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
 
         // POST: api/Orders
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder(PostOrderDTO postOrderDto)
         {
-            var httpClient = httpClientFactory.CreateClient();
+            //var httpClient = httpClientFactory.CreateClient();
+
+            var order = new Order(postOrderDto.Identifier, postOrderDto.Customer);
 
             var json = JsonConvert.SerializeObject(order);
 
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            await httpClient.PostAsync($"http://localhost:5700/basket/{order.Identifier}", content);
+            //await httpClient.PostAsync($"http://localhost:5700/basket/{order.Identifier}", content);
 
             _context.Order.Add(order);
-            await _context.SaveChangesAsync();
 
-          
+            // kod här
+            var basket = await GetBasketItems(postOrderDto.Identifier);
+            var newOrderId = order.OrderID;
+
+            foreach (var item in basket.Items)
+            {
+                var orderLine = new OrderLine
+                {
+                    OrderID = newOrderId,
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity
+                };
+
+                _context.OrderLine.Add(orderLine);
+            };
+
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
         }

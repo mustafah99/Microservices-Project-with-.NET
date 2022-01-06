@@ -11,6 +11,12 @@ namespace AnimimoMicroservices.NewOrderService.Models.Domain
             Customer = customer;
         }
 
+        public Order(string identifier, string customer)
+        {
+            Identifier = identifier;
+            Customer = customer;
+        }
+
         [Key]
         public int OrderID { get; set; }
         public string Identifier { get; set; }
