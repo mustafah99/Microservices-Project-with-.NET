@@ -179,7 +179,11 @@ namespace AnimimoMicroservices.NewOrderService.Controllers
             await _context.SaveChangesAsync();
 
             //return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
-            return Ok(new { orderId = order.OrderID });
+            //return CreatedAtAction("GetOrder", new { id = order.OrderID }, newOrderId);
+
+            return Created("", new { orderId = order.OrderID });
+
+            //return Ok(new { orderId = order.OrderID });
         }
 
         // POST: api/OrderLine
